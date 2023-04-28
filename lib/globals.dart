@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //All constants that are placed in the other file.
-String appVersion = "v0.1";
+String appVersion = "v0.2";
 
 String UserType = '';
 String ServerURL = "192.168.62.25:8080";
