@@ -24,7 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,25 +36,24 @@ class _MyAppState extends State<MyApp> {
       title: 'Happy Learning',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      brightness: Brightness.light,
-          primaryColor:kPrimaryColor,
+        brightness: Brightness.light,
+        primaryColor: kPrimaryColor,
         fontFamily: kTextFont,
-          primaryTextTheme:
-          kTextTheme,
-        appBarTheme:const AppBarTheme(
+        primaryTextTheme: kTextTheme,
+        appBarTheme: const AppBarTheme(
           color: kPrimaryColor,
         ),
-      // Color(0xFFffff72),
-    ),
-    darkTheme: ThemeData(
-    brightness: Brightness.dark,
-      primaryColor:kPrimaryColor,
-      fontFamily: kTextFont,
-      appBarTheme:const AppBarTheme(
-        color: kPrimaryColor,
+        // Color(0xFFffff72),
       ),
-      primaryTextTheme: kTextTheme,
-    ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: kPrimaryColor,
+        fontFamily: kTextFont,
+        appBarTheme: const AppBarTheme(
+          color: kPrimaryColor,
+        ),
+        primaryTextTheme: kTextTheme,
+      ),
       initialRoute: "/",
       routes: {
         // "/": (context) => const HomePage(),
@@ -68,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       },
       home: SplashScreen(
           seconds: 5,
-        routeName: "/",
+          routeName: "/",
           navigateAfterSeconds: const AllFeaturesScreen(),
           title: const Text("Happy Learnings",
               style: TextStyle(
@@ -82,10 +80,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-
-
 
 /*
 class SplashScreen extends StatelessWidget {

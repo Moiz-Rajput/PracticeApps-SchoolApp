@@ -23,9 +23,9 @@ class Repository {
         db.execute(
             "CREATE TABLE users(user_id INTEGER,display_name TEXT,email_address TEXT,password TEXT,department TEXT,time_stamp TEXT,created_on TEXT)");
         db.execute(
-            "CREATE TABLE class(id INTEGER,label TEXT,fee INTEGER)");
-        db.execute(
-            "CREATE TABLE student(id INTEGER,name TEXT,class Text)");
+            "CREATE TABLE student(registration_number INTEGER,name TEXT,email_address TEXT,roll_number TEXT,class TEXT,address TEXT,personal_contact_number TEXT,secondary_contact_number TEXT,secondary_contact_person TEXT,admission_date TEXT,fee TEXT ,personal_contact_number TEXT,date_of_birth TEXT,gender TEXT,student_cnic_number TEXT,secondary_cnic_number TEXT,religion TEXT)");
+        db.execute("CREATE TABLE class(id INTEGER,label TEXT,fee INTEGER)");
+        db.execute("CREATE TABLE student(id INTEGER,name TEXT,class Text)");
       },
       // Set the version. This executes the onCreate function and provides a
       // path to perform database upgrades and downgrades.
@@ -35,7 +35,6 @@ class Repository {
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) {
-
     /*  if (oldVersion < newVersion) {
       db.execute("ALTER TABLE registered_outlets ADD COLUMN area_label text;");
       db.execute(
@@ -45,19 +44,17 @@ class Repository {
     print("haseeb called");*/
   }
 
-  Future insertClasses(String label,int fee) async {
+  Future insertClasses(String label, int fee) async {
     await this.initdb();
     final Database db = await database;
 
     int k = 0;
     try {
-
-List  args =new List();
-        args.add(label);
-        args.add(fee);
-        k = await db.rawInsert(
-            'insert into class (label,fee) values  (?,?) ', args);
-
+      List args = new List();
+      args.add(label);
+      args.add(fee);
+      k = await db.rawInsert(
+          'insert into class (label,fee) values  (?,?) ', args);
     } catch (error) {
       print("//print ERROR");
       //print(error);
@@ -71,15 +68,12 @@ List  args =new List();
     }
   }
 
-
-
   Future<List<Map<String, dynamic>>> getClassesData() async {
     // Get a reference to the database.
     await this.initdb();
     final Database db = await database;
-    final List<Map> maps = await db.rawQuery(
-        'SELECT * FROM class ');
-print("maps"+maps.toString());    return maps;
+    final List<Map> maps = await db.rawQuery('SELECT * FROM class ');
+    print("maps" + maps.toString());
+    return maps;
   }
-
 }

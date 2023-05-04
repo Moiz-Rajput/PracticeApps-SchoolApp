@@ -36,13 +36,13 @@ class _AdmissionScreenState extends State<AdmissionScreen> {
       appBar: AppBar(
         title: const Text("Admission Data"),
       ),
-      body: Card(
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
             TextFormField(
               decoration: const InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Name',
+                // icon: Icon(Icons.person),
                 labelText: 'Student Name',
               ),
               keyboardType: TextInputType.text,

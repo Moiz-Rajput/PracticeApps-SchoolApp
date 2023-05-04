@@ -1,3 +1,4 @@
+import 'package:animation_list/animation_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -5,13 +6,17 @@ import 'package:school_management/Repository.dart';
 import 'package:school_management/globals.dart';
 
 class Classes extends StatefulWidget {
-    @override
+  @override
   State<Classes> createState() => _ClassesState();
 }
 
 class _ClassesState extends State<Classes> {
-List classData;
-Repository repo =Repository();
+  List classData = [];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -19,207 +24,191 @@ Repository repo =Repository();
     getData();
   }
 
-
 // final ref = FirebaseDatabase.instance.ref();
 //  var snapshot=null;
   Future getData() async {
- // snapshot = await ref.child('classes_data').get();
- //
- //  if (snapshot.exists) {
- //    classData=snapshot.value.toString();
- //    print("Data is"+snapshot.value.toString());
- //    print("Data is"+classData);
- //  } else {
- //    print('No data available.');
- //  }
-    classData= await repo.getClassesData();
+    // snapshot = await ref.child('classes_data').get();
+    //
+    //  if (snapshot.exists) {
+    //    classData=snapshot.value.toString();
+    //    print("Data is"+snapshot.value.toString());
+    //    print("Data is"+classData);
+    //  } else {
+    //    print('No data available.');
+    //  }
 
+    Repository repo = Repository();
+    classData = await repo.getClassesData();
+    setState(() {
+      classData = classData;
+    });
+  }
 
-}
+  Widget _buildListView() {
+    return Container(
+        height: MediaQuery.of(context).size.height / 1.3,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: classData != null ? classData.length : 0,
+          itemBuilder: (BuildContext context, int index) {
+            String ClassesName = "";
+            String Fee = "";
+            String DefaultTeacher = "Ali";
+            // String PurposeTypeLabel = "";
 
+            if (classData[index]["label"] != null) {
+              ClassesName = classData[index]["label"];
+            }
 
-Widget _buildListView() {
-  return ListView.builder(
-    shrinkWrap: true,
-    itemCount: classData != null ? classData.length : 0,
-    itemBuilder: (BuildContext context, int index) {
-      String ClassesName = "";
-      String Fee = "";
-      String DefaultTeacher = "Ali";
-      // String PurposeTypeLabel = "";
+            if (classData[index]["fee"] != null) {
+              Fee = classData[index]["fee"].toString();
+            }
+            // if (classData[index]["teacher"] != null) {
+            //   DefaultTeacher = classData[index]["teacher"].toString();
+            // }
 
-      if (classData[index]["label"] != null) {
-        ClassesName = classData[index]["label"];
-      }
+            String ListText =
+                "Class Teacher: $DefaultTeacher \nClasses: $ClassesName \nFee: $Fee";
 
-      if (classData[index]["fee"] != null) {
-        Fee = classData[index]["fee"].toString();
-      }
-      // if (classData[index]["teacher"] != null) {
-      //   DefaultTeacher = classData[index]["teacher"].toString();
-      // }
-
-      String ListText =
-          "Class Teacher: $DefaultTeacher \nClasses: $ClassesName \nFee: $Fee";
-
-      // if (filter == null || filter == "") {
-        return Card(
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: ListTile(
-                  onTap: () async {
-                    // List selectedRequests = new List();
-                    // selectedRequests.add(classData[index]);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) =>
-                    //           ContingencyAssetApprovalDetail(
-                    //               selectedRequests: selectedRequests)),
-                    // );
-                  },
-                  // trailing: Text(
-                  //   PurposeTypeLabel,
-                  //   style: TextStyle(color: Color(0xFF004b93)),
-                  // ),
-                  title: Text(
-                      Fee +" - "+ClassesName,
-                      // allRequests[index]["UnitID"] +
-                      //     " - " +
-                      //     allRequests[index]["UnitLabel"],
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  subtitle: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Text(ListText, style: const TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                )));
-      // }
-      // else {
-      //   if (allRequests[index]['UnitLabel']
-      //       .toLowerCase()
-      //       .contains(filter.toLowerCase()) ||
-      //       allRequests[index]['UnitID']
-      //           .toLowerCase()
-      //           .contains(filter.toLowerCase())) {
-      //     return Card(
-      //         child: Container(
-      //             width: MediaQuery.of(context).size.width,
-      //             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      //             child: ListTile(
-      //               onTap: () async {
-      //                 List selectedRequests = new List();
-      //                 selectedRequests.add(allRequests[index]);
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                       builder: (context) =>
-      //                           ContingencyAssetApprovalDetail(
-      //                               selectedRequests: selectedRequests)),
-      //                 );
-      //               },
-      //               trailing: Text(
-      //                 PurposeTypeLabel,
-      //                 style: TextStyle(color: Color(0xFF004b93)),
-      //               ),
-      //               title: Text(
-      //                   allRequests[index]["UnitID"] +
-      //                       " - " +
-      //                       allRequests[index]["UnitLabel"],
-      //                   style: new TextStyle(
-      //                       fontSize: 18, fontWeight: FontWeight.bold)),
-      //               subtitle: Column(
-      //                 mainAxisAlignment: MainAxisAlignment.start,
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 mainAxisSize: MainAxisSize.max,
-      //                 children: <Widget>[
-      //                   Text(ListText, style: new TextStyle(fontSize: 15)),
-      //                 ],
-      //               ),
-      //             )));
-      //   } else {
-      //     return Container();
-      //   }
-      // }
-    },
-  );
-}
-
-
-
+            // if (filter == null || filter == "") {
+            return Card(
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    child: ListTile(
+                      onTap: () async {
+                        // List selectedRequests = new List();
+                        // selectedRequests.add(classData[index]);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           ContingencyAssetApprovalDetail(
+                        //               selectedRequests: selectedRequests)),
+                        // );
+                      },
+                      // trailing: Text(
+                      //   PurposeTypeLabel,
+                      //   style: TextStyle(color: Color(0xFF004b93)),
+                      // ),
+                      title: Text(Fee + " - " + ClassesName,
+                          // allRequests[index]["UnitID"] +
+                          //     " - " +
+                          //     allRequests[index]["UnitLabel"],
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Text(ListText, style: const TextStyle(fontSize: 15)),
+                        ],
+                      ),
+                    )));
+            // }
+            // else {
+            //   if (allRequests[index]['UnitLabel']
+            //       .toLowerCase()
+            //       .contains(filter.toLowerCase()) ||
+            //       allRequests[index]['UnitID']
+            //           .toLowerCase()
+            //           .contains(filter.toLowerCase())) {
+            //     return Card(
+            //         child: Container(
+            //             width: MediaQuery.of(context).size.width,
+            //             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            //             child: ListTile(
+            //               onTap: () async {
+            //                 List selectedRequests = new List();
+            //                 selectedRequests.add(allRequests[index]);
+            //                 Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                       builder: (context) =>
+            //                           ContingencyAssetApprovalDetail(
+            //                               selectedRequests: selectedRequests)),
+            //                 );
+            //               },
+            //               trailing: Text(
+            //                 PurposeTypeLabel,
+            //                 style: TextStyle(color: Color(0xFF004b93)),
+            //               ),
+            //               title: Text(
+            //                   allRequests[index]["UnitID"] +
+            //                       " - " +
+            //                       allRequests[index]["UnitLabel"],
+            //                   style: new TextStyle(
+            //                       fontSize: 18, fontWeight: FontWeight.bold)),
+            //               subtitle: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.start,
+            //                 crossAxisAlignment: CrossAxisAlignment.start,
+            //                 mainAxisSize: MainAxisSize.max,
+            //                 children: <Widget>[
+            //                   Text(ListText, style: new TextStyle(fontSize: 15)),
+            //                 ],
+            //               ),
+            //             )));
+            //   } else {
+            //     return Container();
+            //   }
+            // }
+          },
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Classes"),
-        leading:IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_sharp),
+        appBar: AppBar(
+          title: const Text("Classes"),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_sharp),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
+        //TODO: The issue is that the list does not update after navigation.
+        body: SingleChildScrollView(
+            child: Column(children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ClassInfo()));
+            },
+            child: Column(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, 'ClassInfo');
-                  },
+                Container(
+                  padding: EdgeInsets.all(30),
+                  color: Theme.of(context).primaryColor,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const Icon(Icons.add),
                       Container(
-                          color: Theme.of(context).primaryColor,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children:  [
-                             const Icon(Icons.add),
-                              Container(
-                                height: 10,
-                              ),
-                              Text("Add New Classes",style: TextStyle(color: Theme.of(context).bottomAppBarColor,fontSize: 20),),
-                            ],
-                          )),
-                      Container(
-                        // color: Theme.of(context).primaryColor,
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 4,
-                        child:
-                          _buildListView(),
+                        height: 5,
+                      ),
+                      Text(
+                        "Add New Classes",
+                        style: TextStyle(
+                            color: Theme.of(context).bottomAppBarColor,
+                            fontSize: 20),
                       ),
                     ],
                   ),
                 ),
-
               ],
             ),
-            // _buildListView(),
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //     primary: Theme.of(context).bottomAppBarColor,
-            //     minimumSize: const Size(100, 40),
-            //   ),
-            //
-            //   onPressed: () async{
-            //     getData();
-            //   },
-            //   child: const Text("Refresh"),
-            // ),
-
-          ],
-        ),
-      ),
-    );
+          ),
+          AnimationList(
+            duration: 2000,
+            reBounceDepth: 70,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [_buildListView()],
+          ),
+        ])));
   }
 }
 
@@ -231,7 +220,6 @@ class ClassInfo extends StatefulWidget {
 class _ClassInfoState extends State<ClassInfo> {
   // DatabaseReference ref = FirebaseDatabase.instance.ref("classes_data");
 
-
   // FirebaseDatabase database = FirebaseDatabase.instance;
   // FirebaseApp DB = Firebase.app('class');
 
@@ -239,8 +227,14 @@ class _ClassInfoState extends State<ClassInfo> {
 
   TextEditingController ClassName = TextEditingController();
   TextEditingController Fee = TextEditingController();
-Repository repo=Repository();
+  Repository repo = Repository();
 
+  @override
+  void dispose() {
+    super.dispose();
+    ClassName.dispose();
+    Fee.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -248,10 +242,9 @@ Repository repo=Repository();
       appBar: AppBar(
         title: const Text("Class Info"),
         leading: ElevatedButton(
-
           style: ElevatedButton.styleFrom(
             primary: kPrimaryColor,
-          elevation: 0,
+            elevation: 0,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -270,7 +263,7 @@ Repository repo=Repository();
               ),
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
-              controller:ClassName,
+              controller: ClassName,
               // onChanged: (value) {
               //   ClassName.text = value;
               // },
@@ -281,7 +274,7 @@ Repository repo=Repository();
               ),
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
-              controller:Fee,
+              controller: Fee,
               // onChanged: (value) {
               //   Fee.text = value;
               // },
@@ -294,14 +287,15 @@ Repository repo=Repository();
                 primary: Theme.of(context).bottomAppBarColor,
                 minimumSize: const Size(100, 40),
               ),
-
-              onPressed: () async{
+              onPressed: () async {
                 // await ref.child(ClassName.text).set({
                 //      "Fee": Fee.text,
                 //     });
-                repo.insertClasses(ClassName.text,int.parse(Fee.text)).onError((error, stackTrace) => print("Failed to enter the classses"));
+                repo.insertClasses(ClassName.text, int.parse(Fee.text)).onError(
+                    (error, stackTrace) =>
+                        print("Failed to enter the classses"));
                 ClassName.clear();
-               Fee.clear();
+                Fee.clear();
               },
               child: const Text("Submit"),
             ),
@@ -311,8 +305,6 @@ Repository repo=Repository();
     );
   }
 }
-
-
 
 // StreamBuilder<QuerySnapshot>(
 // stream: _message

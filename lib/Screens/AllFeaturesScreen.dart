@@ -53,24 +53,24 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
     //   }
     //   ;
     // } catch (e) {
-    //   print("error is: " + e.toString()); // TODO: show dialog with error
+    //   print("error is: " + e.toString());
     // }
   }
 
-  Future<void>  SubmitData() async {
+  Future<void> SubmitData() async {
     Repository repo = Repository();
     await repo.initdb();
-
   }
-  void testing()async{
-    var TimeStamp='Moiz';
+
+  void testing() async {
+    var TimeStamp = 'Moiz';
     // _signOut;
     // Navigator.pushNamed(context, 'Login');
     var QueryParameters = <String, String>{
       "problems_resolved": TimeStamp,
     };
-    var url = Uri.http(globals.ServerURL,
-        '/school_portal/Testing', QueryParameters);
+    var url =
+        Uri.http(globals.ServerURL, '/school_portal/Testing', QueryParameters);
     var response = await http.post(
       url,
       headers: {
@@ -86,9 +86,8 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
   @override
   void initState() {
     super.initState();
-  SubmitData();
+    SubmitData();
   }
-
 
   Widget bodyFunction() {
     switch (_page) {
@@ -168,8 +167,7 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
             ),
             GestureDetector(
               onTap: () {
-             testing();
-
+                testing();
               },
               child: Container(
                 width: MediaQuery.of(context).size.width / 2,
@@ -223,61 +221,44 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
         return Container(color: Colors.orange);
         break;
       case 3:
-        return   Container(
+        return Container(
           color: Theme.of(context).backgroundColor,
           child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-              children: [ Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                           Text("Hi Ahmad!",style: TextStyle(fontFamily: kTextFont,fontSize: 25)),
-                        ],
-                      ),
-
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100.0),
-                            child: Image.asset(
-                              'images/student.jpeg',
-                              height: 200,
-                              width: 200,
-                            ),
+                          Text(
+                            "Hi Ahmad!",
+                            style:
+                                TextStyle(fontFamily: kTextFont, fontSize: 25),
                           ),
                         ],
-                      )
-
-
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      //     color: Colors.redAccent,
-                      //   ),
-                      //   child: Image.asset(
-                      //     'images/student.jpeg',
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                Container(
-                  height: 6,
-                  color: Theme.of(context).bottomAppBarColor,
-                ),
-                const ListTile(
-                  tileColor: kPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2,color: kPrimaryColor),
-                      borderRadius:BorderRadiusDirectional.all(Radius.circular(7)),
-                  ),
-                  title:  Text("Fee Particulars"),
-                  subtitle:  Text("Fee Makings"),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: Image.asset(
+                            'images/student.jpeg',
+                            height: MediaQuery.of(context).size.height / 7,
+                            width: MediaQuery.of(context).size.width / 3,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 Container(
                   height: 6,
@@ -286,11 +267,12 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
                 const ListTile(
                   tileColor: kPrimaryColor,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2,color: kPrimaryColor),
-                    borderRadius:BorderRadiusDirectional.all(Radius.circular(7)),
+                    side: BorderSide(width: 2, color: kPrimaryColor),
+                    borderRadius:
+                        BorderRadiusDirectional.all(Radius.circular(7)),
                   ),
-                  title:  Text("Fee Structure"),
-                  subtitle:  Text("Fee Structures"),
+                  title: Text("Fee Particulars"),
+                  subtitle: Text("Fee Makings"),
                 ),
                 Container(
                   height: 6,
@@ -299,11 +281,12 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
                 const ListTile(
                   tileColor: kPrimaryColor,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2,color: kPrimaryColor),
-                    borderRadius:BorderRadiusDirectional.all(Radius.circular(7)),
+                    side: BorderSide(width: 2, color: kPrimaryColor),
+                    borderRadius:
+                        BorderRadiusDirectional.all(Radius.circular(7)),
                   ),
-                  title:  Text("Special Discount"),
-                  subtitle:  Text("Discounts in fee"),
+                  title: Text("Fee Structure"),
+                  subtitle: Text("Fee Structures"),
                 ),
                 Container(
                   height: 6,
@@ -312,11 +295,12 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
                 const ListTile(
                   tileColor: kPrimaryColor,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2,color: kPrimaryColor),
-                    borderRadius:BorderRadiusDirectional.all(Radius.circular(7)),
+                    side: BorderSide(width: 2, color: kPrimaryColor),
+                    borderRadius:
+                        BorderRadiusDirectional.all(Radius.circular(7)),
                   ),
-                  title:  Text("Upload Data"),
-                  subtitle:  Text("Upload latest data which is in mobile."),
+                  title: Text("Special Discount"),
+                  subtitle: Text("Discounts in fee"),
                 ),
                 Container(
                   height: 6,
@@ -325,23 +309,33 @@ class _AllFeaturesScreenState extends State<AllFeaturesScreen> {
                 const ListTile(
                   tileColor: kPrimaryColor,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2,color: kPrimaryColor),
-                    borderRadius:BorderRadiusDirectional.all(Radius.circular(7)),
+                    side: BorderSide(width: 2, color: kPrimaryColor),
+                    borderRadius:
+                        BorderRadiusDirectional.all(Radius.circular(7)),
                   ),
-                  title:  Text("Logout"),
+                  title: Text("Upload Data"),
+                  subtitle: Text("Upload latest data which is in mobile."),
                 ),
-
-
+                Container(
+                  height: 6,
+                  color: Theme.of(context).bottomAppBarColor,
+                ),
+                const ListTile(
+                  tileColor: kPrimaryColor,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: kPrimaryColor),
+                    borderRadius:
+                        BorderRadiusDirectional.all(Radius.circular(7)),
+                  ),
+                  title: Text("Logout"),
+                ),
               ],
             ),
           ),
         );
         break;
-
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
